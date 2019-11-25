@@ -3,6 +3,7 @@ package com.example.presentation;
 import android.app.Activity;
 import android.widget.Toast;
 
+import androidx.core.app.ComponentActivity;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.intent.matcher.IntentMatchers;
 import androidx.test.espresso.remote.EspressoRemoteMessage;
@@ -23,6 +24,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.ComponentNameMatchers.hasShortClassName;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -100,7 +102,7 @@ public class signInTest {
         intended(allOf(
                 hasComponent(hasShortClassName(".homePage")),
                 toPackage("com.example.presentation"),
-                IntentMatchers.hasExtra("MainActivity.ExtraData", "Welcome to your HomePage raima.imran@gmail.com")));
+                hasExtra("MainActivity.ExtraData", "Welcome to your HomePage raima.imran@gmail.com")));
     }
 
 
