@@ -32,19 +32,26 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*EditText uname = findViewById(R.id.bsemailid);
+                EditText uname = findViewById(R.id.bsemailid);
                 if (uname.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "You must enter your email", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (uname.getText().toString().contains("@") != true)
+                {
+                    Toast.makeText(getApplicationContext(), "You must enter a valid email.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 EditText pass = findViewById(R.id.bspassword);
                 if (pass.getText().toString().isEmpty()){
                     Toast.makeText(getApplicationContext(), "You must enter your password", Toast.LENGTH_SHORT).show();
                     return;
-                }*/
+                }
                 Intent intent = new Intent(MainActivity.this, homePage.class);
+
+                intent.putExtra("UserName", uname.getText().toString());
                 startActivity(intent);
-                finish();
+
             }
         });
     }
