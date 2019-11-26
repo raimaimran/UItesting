@@ -26,6 +26,8 @@ import static androidx.test.espresso.intent.matcher.ComponentNameMatchers.hasSho
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -62,7 +64,7 @@ public class signInTest {
         onView(withId(R.id.redirectsignup))
                 .perform(click());
 
-        onView(withId(R.id.signUp))
+        onView(withId(R.id.signUp)) //text view
                 .check(matches(isDisplayed()));
     }
 
@@ -83,8 +85,38 @@ public class signInTest {
         onView(withId(R.id.homePage)) //second find the view displayed and checks whether it is displayed or not
                 .check(matches(withText("Welcome to your HomePage raima.imran@gmail.com" )));
 
+    }  ///////////////
+
+    @Test
+    public void error_displayed_when_email_not_entered(){
+
+        onView(withId(R.id.bspassword))
+                .perform(typeText("password"));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.bssignin))
+                .perform(click());
+
+        onView((withId(R.id.incorrectmail))).check(matches(withText("You must enter your email")));
+
     }
 
+    @Test
+    public void error_displayed_when_wrong_email_entered(){
+        onView(withId(R.id.bsemailid))
+                .perform(typeText("abc.gmail.com"));
+        onView(withId(R.id.bspassword))
+                .perform(typeText("password"));
+
+        closeSoftKeyboard();
+
+        onView(withId(R.id.bssignin))
+                .perform(click());
+
+        onView((withId(R.id.incorrectmail))).check(matches(withText("You must enter a valid email.")));
+
+    }
 
     @Test
     public void verify_correct_email_received_by_activity(){
@@ -99,30 +131,16 @@ public class signInTest {
         onView(withId(R.id.bssignin))
                 .perform(click());
 
-        intended(allOf(
-                hasComponent(hasShortClassName(".homePage")),
-                toPackage("com.example.presentation"),
-                hasExtra("MainActivity.ExtraData", "Welcome to your HomePage raima.imran@gmail.com")));
+        onView(withId(R.id.homePage)) //text view
+                .check(matches(withText("Welcome to your HomePage raima.imran@gmail.com" )));
+
     }
 
 
 
-    @Test
-    public void error_displayed_when_wrong_email_entered(){
-        onView(withId(R.id.bsemailid))
-                .perform(typeText("abc.gmail.com"));
-        onView(withId(R.id.bspassword))
-                .perform(typeText("password"));
 
-        closeSoftKeyboard();
 
-        onView(withId(R.id.bssignin))
-                .perform(click());
 
-        onView(allOf(withId(Toast.LENGTH_SHORT), isDisplayed())).check(matches(withText("You must enter a valid email.")));
 
-        //all of is a combination function
-        //in this case first it catches all toast with the given id and then selects the toast displayed with the following texts
-    }
 
 }
